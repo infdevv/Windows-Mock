@@ -261,26 +261,6 @@ function handleKeyPress(event) {
 
 // Chat time
 
-const sendButton = document.getElementById("send-btn");
-const userInput = document.getElementById("user-input");
-const computerMessage = document.getElementById("computer-message");
-
-sendButton.addEventListener("click", () => {
-  const userMessage = userInput.value;
-  computerMessage.innerText = `Getting response...`;
-  if (userInput == "shutdown") {
-    computerMessage.innerText = `Shutting down in 5 seconds...`;
-    setTimeout(function () {
-      try {
-        closeWindow();
-        $("#startmenu").toggle();
-      } finally {
-        passlock();
-      }
-    });
-  }
-  userInput.value = "";
-});
 
 function runcmd() {
   var query = document.getElementById("cmdline").value;

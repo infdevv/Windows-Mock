@@ -1,8 +1,81 @@
+
 body {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv3tHYZPdkovYKeXksUPv9tktWR0gOQxAx6cTB9I3P3Zci4xLkVD9kP90XyL-4KLDlnKk:https://images.pexels.com/photos/1146708/pexels-photo-1146708.jpeg%3Fcs%3Dsrgb%26dl%3Dpexels-johannes-plenio-1146708.jpg%26fm%3Djpg&usqp=CAU);
+  background-repeat: no-repeat;
+  background-size: cover;
+  user-select: none;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+#ifme{
+    height: 80%;
+    width: 100%;
+}
+
+.chat-window {
+    width: 400px;
+    height: 600px;
+    border: 1px solid #ccc;
+    margin: 50px auto;
+    padding: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    text-align: center;
+}
+
+.exit_button{
+    background-color: lightcoral;
+    color: white;
+    width: 10px;
+}
+
+#computer-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#user-input {
+    width: 75%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#send-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#send-btn:hover {
+    background-color: #3e8e41;
+}
+
+
+
+#ifme{
+    width: 100%;
+    height: 90%;
+    resize: both;
+    min-height: 200px;
+  max-height: 800px;
 }
 
 .window {
@@ -10,17 +83,26 @@ body {
   background-color: #c2c2c2;
   width: 400px;
   min-height: 200px;
-  max-height: 200px;
+  max-height: 800px;
   border: 2px solid #000;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   resize: both;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: scroll;
   z-index: 1;
 }
 
-#textbox{
-    width: 250;
-    height: max-content3;
+textarea{
+   width: 100%;
+   height: 80%;
+}
+
+.window-title{
+    z-index: 999;
+}
+
+.window-main{
+    overflow: scroll;
 }
 
 .spinner {
@@ -42,7 +124,9 @@ body {
   }
 }
 
-
+.contaner{
+    overflow: scroll;
+}
 .window-title {
   background-color: #017acd;
   padding: 8px;
@@ -124,6 +208,13 @@ body {
 #iframe{
     overflow: auto;
     width: 50px;
+}
+
+#clock{
+   right: 0px;
+   position: fixed;
+   width: 100px;
+   z-index: 9999;
 }
 
 .context-menu {

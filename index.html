@@ -1,16 +1,29 @@
+<!-- This is a seperate version due to the other version being glitched by sololearn and having false credits ( because i am the only person to work on this project ) -->
+
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Windows Infinite</title>
-	</head>
-	<body>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.4.0/dist/tf.min.js"></script>
+    </head>
+	<body id="body">
         <noscript> You need to enable JavaScript to run this application </noscript>
         <div id="screen">
         </div> 
-		<script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
+
+
+        <div id="startmenu" class="window">
+           <div class="chat-window">
+        <h2>Chat with Computer</h2>
+        <p id="computer-message"></p>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button id="send-btn">Send</button>
+    </div>
+    </div>
+    <script src="script.js"></script>
+        </div>
+		
 	</body>
 </html>
-
-
-

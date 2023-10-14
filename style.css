@@ -10,9 +10,53 @@ body {
   user-select: none;
 }
 
+.pushnoti{
+    background-color: black;
+    opacity: 80%;
+    height: 200px;
+    width:200px;
+    position: fixed;
+    right: 25px;
+    bottom: 50px;
+}
+
+.notifications{
+    background-color: black;
+    opacity: 80%;
+    height: 300px;
+    width: 200px;
+    overflow: scroll;
+    position: fixed;
+    right: 25px;
+    bottom: 50px;
+}
+
+#notbox{
+    overflow: scroll;
+}
+
+.notification{
+    opacity: 100;
+    border-radius: 5px;
+    color: white;
+}
+
+#cmdbar{
+    top: 0;
+    position: fixed;
+    width: 100%;
+    background-color: white;
+}
 
 body {
     font-family: Arial, sans-serif;
+}
+
+#fullscreen{
+    width: 20px;
+    position: absolute;
+    top: 5px;
+    right: 20px;
 }
 
 #ifme{
@@ -38,6 +82,7 @@ h2 {
     background-color: lightcoral;
     color: white;
     width: 10px;
+
 }
 
 #computer-message {

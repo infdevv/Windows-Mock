@@ -7,24 +7,34 @@
 		<title>Windows Infinite</title>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.4.0/dist/tf.min.js"></script>
-		<link rel="stylesheet" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/puppeteer@21.3.8/lib/cjs/puppeteer/puppeteer.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
     </head>
 	<body id="body">
+        <div id="cmdbar">
+            <input id="cmd11">
+            <button onclick="eval(document.getElementById('cmd11').value)"">Submit</button>
+        </div>
         <noscript> You need to enable JavaScript to run this application </noscript>
         <div id="screen">
         </div> 
 
-
-        <div id="startmenu" class="window">
-           <div class="chat-window">
-        <h2>Chat with Computer</h2>
-        <p id="computer-message"></p>
-        <input type="text" id="user-input" placeholder="Type your message...">
-        <button id="send-btn">Send</button>
-    </div>
-    </div>
-    <script src="script.js"></script>
+        <div class="notifications">
+        <div> 
+            <h2 style="color:white;"> Notifications </h2>
+            <hr>
+            <div id="notbox">
+            </div>
         </div>
-		
+        
+        </div>
+        <div class="pushnoti">
+            <div class="notification">
+    <h5> Notification from: <h5 id="name"> </h5></h5>
+    <hr>
+    <h6 id="info"> </h6>
+    </div>
+        </div>
+
 	</body>
 </html>

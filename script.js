@@ -14,8 +14,15 @@
 
 // restart - Restarts the system to Passlock ( DO NOT RUN IT )
 
-// function cr1(){ console.log("INJECTED"); localStorage.setItem('startup', 'key=(document.getElementById("screen"); screen.remove(); document.write("<center><h1>Dead</h1></center>")')} cr1()
+// Giant try of doom ( system erorr recovery )
+try{
+// Hide stuff or something 
+$("#cmdbar").toggle()
+$(".pushnoti").toggle()
+$(".notifications").toggle()
 
+// Variables 
+rantime=0
 
 setInterval(function () {
   var elems = document.querySelectorAll(".ifme"); // Get all elements with class="ifme"
@@ -25,7 +32,6 @@ setInterval(function () {
   });
 }, 100);
 
-$("#startmenu").toggle();
 
 setInterval(function () {
   try {
@@ -196,8 +202,8 @@ function gettasks() {
   return variables;
 }
 
-function restore(string) {
-  search(string);
+function opennotifications(){
+    $(".notifications").toggle()
 }
 
 function openchrome() {
@@ -220,9 +226,14 @@ function openchrome() {
 
 check1 = 0;
 function search(str) {
+
+
   search1 = document.getElementById("searchbar").value;
 
+
   document.getElementById("ifme").setAttribute("src", search1);
+  ifme = document.getElementById("ifme");
+ifme.style.height = "100%";
 }
 
 function cmd1() {
@@ -261,21 +272,17 @@ function handleKeyPress(event) {
 
 // Chat time
 
-
 function runcmd() {
   var query = document.getElementById("cmdline").value;
   create("h6", "cmdline1", "cmd", query);
+  if (query == "cmdbar"){
+      $("cmdbar").toggle()
+  }
   if (query == "cloak") {
-    // Get the current document's HTML content
-    var html = document.documentElement.outerHTML;
-
-    // Open a new tab
-    window.open("about:blank");
-
-    // Write the HTML content to the new tab
-    window.focus();
-    document.write(html);
-    document.close();
+      closeWindow()
+    code = document.documentElement.outerHTML;
+	   var win = window.open();
+	   win.document.write(code);
   }
   if (query == "sysfix") {
     // Get all div elements in the document
@@ -426,8 +433,34 @@ function handle_error(error) {
   }
 }
 
+function notification(name,msg){
+    box = document.createElement("div")
+    box.innerHTML=(`
+    <div class="notification">
+    <h5> Notification from: ${name} </h5>
+    <hr>
+    <h6> ${msg} </h6>
+    </div>
+    `)
+    notbox=(document.getElementById("notbox"))
+    notbox.appendChild(box)
+    $(".pushnoti").toggle()
+    document.getElementById("name").innerHTML=(name)
+    document.getElementById("info").innerHTML=(msg)
+    setTimeout(function(){
+        $(".pushnoti").toggle()
+    },3000)
+}
+
 function create_window(name, exitpar) {
   // Create the window elements dynamically
+  try{
+      closeWindow()
+  }
+  catch{
+
+  }
+
   const windowElem = document.createElement("div");
   windowElem.className = "window";
   windowElem.id = "window-main";
@@ -446,18 +479,49 @@ function create_window(name, exitpar) {
   document.body.appendChild(windowElem);
 
   if (exitpar == true) {
+      on=0
+
+
+
+// Create a button element
+var button = document.createElement('img');
+button.src=fullscreen
+button.id="fullscreen"
+// Add an event listener to the button
+button.addEventListener('click', function() {
+  
+  if (on == 1){
+      on=0
+      button.src=fullscreen
+      windowElem.style.width = '40%';
+  windowElem.style.height = '20%';
+  }
+  else{
+      on=1
+      button.src=minimize
+      windowElem.style.width = '100%';
+      windowElem.style.height = '100%';
+  }
+  // Set the width and height of the body element to 100%
+  
+});
+
+// Add the button to the page
+titleBar.appendChild(button);
+
     const exitButton = document.createElement("div");
     exitButton.className = "exit-button";
     exitButton.textContent = "X";
     exitButton.style.position = "absolute";
-    exitButton.style.top = "0";
-    exitButton.style.right = "0";
+    exitButton.style.top = "5px";
+    exitButton.style.right = "5px";
 
     titleBar.appendChild(exitButton);
 
     exitButton.addEventListener("click", () => {
       windowElem.remove();
     });
+    return num
   }
 
   function reset1() {
@@ -537,7 +601,7 @@ function reset() {
 }
 
 function startup() {
-  create_window("Startup");
+  num=create_window("Startup");
   create("center", "content", "center", "");
   create("h2", "center", "", "Loading assets");
 
@@ -577,12 +641,12 @@ function startup() {
 }
 
 function quickfile() {
-  create_window("Quick File", true);
+  num=create_window("Quick File", true);
   create("input", "content", "name");
   create("h3", "content", "", "Only TXT supported currently");
   create(
     "button",
-    "content",
+    ("content["+num+"]"),
     "",
     "Make file",
     "create_file1(document.getElementById('name').value, '')",
@@ -635,26 +699,27 @@ document.addEventListener("DOMContentLoaded", function () {
 // System files but not essentials
 
 function firsttime() {
-  create_window("Welcome to Windows Infinite");
-  create("h2", "content", "", "Give a product key!");
-  create("input", "content", "productkey");
-  create("button", "content", "", "Submit", "part2()");
+  rantime=1
+  num=create_window("Welcome to Windows Infinite");
+  create("h2", ("content"), "", "Give a product key!");
+  create("input", ("content"), "productkey");
+  create("button", ("content"), "", "Submit", "part2()");
 }
 
 function part2() {
   key = document.getElementById("productkey").value;
   if (productcheck(key) == true) {
-    create("center", "content", "center", "");
-    create("h2", "center", "", "Make a account");
-    create("br", "content");
-    create("input", "content", "input-signup");
+    create("center", ("content"), "center", "");
+    create("h2", ("content"), "", "Make a account");
+    create("br", ("content"));
+    create("input", ("content"), "input-signup");
     inputBox = document.getElementById("input-signup");
     inputBox.placeholder = "Enter Account Name";
-    create("input", "content", "input-signup1");
+    create("input", ("content"), "input-signup1");
     inputBox = document.getElementById("input-signup1");
     inputBox.placeholder = "Enter Account Password";
-    create("br", "content");
-    create("center", "content", "center2", "");
+    create("br", ("content"));
+    create("center", ("content"), "center2", "");
     passwordInput = document.getElementById("input-signup1");
     passwordInput.type = "password";
     create("button", "center2", "submit-button", "Submit", "finalize1331()");
@@ -674,21 +739,21 @@ function finalize1331() {
 
 function passlock() {
   create_window("Sign in");
-  create("center", "content", "center", "");
+  create("center", ("content"), "center", "");
 
   const filteredList = directorymgr().filter((item) =>
     item.startsWith("user/"),
   );
 
   create("h3", "center", "", filteredList);
-  create("br", "content");
-  create("center", "content", "center", "");
+  create("br", ("content"));
+  create("center", ("content"), "center", "");
   create("input", "center", "passcheck");
   inputBox = document.getElementById("passcheck");
   inputBox.placeholder = "Enter Account Password";
   inputBox.type = "password";
   create("br", "content");
-  create("center", "content", "center1", "");
+  create("center", ("content"), "center1", "");
   create("button", "center", "", "Check Password", "keycheck()");
 }
 
@@ -807,6 +872,7 @@ function main() {
   startButton5.className = "start-button";
   var startIcon = document.createElement("img");
   startButton5.appendChild(startIcon);
+  startButton5.setAttribute("onclick","opennotifications()")
   startButton5.setAttribute("id", "clock");
 
   var startButton6 = document.createElement("button");
@@ -835,7 +901,15 @@ function main() {
   taskbar.appendChild(startButton5);
   taskbar.appendChild(startButton6);
   taskbar.appendChild(startMenu);
-
+  if (rantime == 1){
+  notification("System","Welcome to windows infinite! If you see a problem then restart the OS")
+  document.body.style.backgroundImage =
+    'url("' + windows_default + '")';
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundRepeat = "no-repeat";
+  document.body.style.backgroundPosition = "center center";
+  localStorage.setItem("bg", windows_default);
+  }
   //create_window("Welcome to Windows Infinite!",true)
 
   // Add taskbar to the document body
@@ -850,6 +924,9 @@ function main() {
       start1();
     }
   };
+  
+
+
 
   function start1() {
     on = 1;
@@ -901,7 +978,8 @@ function internetexplorer() {
 }
 
 function startmenu() {
-  $("#startmenu").toggle();
+  // Not finished yet 
+  notification("System","This feature is still in development, check in later")
 }
 
 function notepad(str) {
@@ -920,6 +998,14 @@ function notepad(str) {
 }
 
 // Images
+windows_default=
+   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4NuFYHBQVJoNJD0Nyx6TXfhbRzlaAn01dJKjOCfiBUrQDojvcmF9Jfd9w0kyQs4WVcbE:https://www.pcworld.com/wp-content/uploads/2023/04/Windows-10.jpg%3Fquality%3D50%26strip%3Dall%26w%3D1024&usqp=CAU"
+seperator=
+   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAI8AAACPCAMAAAD0vXihAAAAIVBMVEX///8AAADV1dX19fWmpqYqKirk5ORzc3NHR0d7e3shISF4Kv4/AAAAbklEQVR4nO3U2Q2EMAxAQXshXP0XjOjA+5EoiJkKnmI7EQAAAAAAAAAAAJ+y/Xrb/snZr+zt2ss1y9G95nEsxZ51SE7mWuxpg3pasWdQTuZL32e2/ZntviLO/iNrZ7kmpvufAQAAAAAAAAAA3u8G5FIFvA1LdwQAAAAASUVORK5CYII="
+minimize=
+   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwf7JIqj-IFCe2hmZad8lAUZJ87rGe8tZwIM9V-q2EvAvwFCvXcU2ZgU7Gwo8uSH9gWpA:https://icons.veryicon.com/png/o/object/material_design_icons/window-minimize-3.png&usqp=CAU"
+fullscreen=
+   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAI8AAACPCAMAAAD0vXihAAAAKlBMVEX///8AAADg4OBbW1uDg4Pd3d3r6+t2dnZhYWGfn59UVFR+fn78/PwgICAheNfUAAAAyklEQVR4nO3ayw6CMBBAUQTKo8D//64rTZS0ISloo+esncldWjJNAwAAAHCmNbQZQ2JqyA2FtaAn3HLGxNSYnQoFPW12c5+Y6rNTrR49evT8XM+SmFo+0rNN3as4J6bm+PbLabugZyrYM13Q0xXs6fTo0aNHjx49eg70xII98aSeYewfltS/wSPm5blnTH0VAQAA+Ge1vb9qe5/W/H7Xo0ePHj169PxeT233CbXdb+x9975lr7b7Hz169Oi5rqe2+/Da7ucBAAAA9u6emQ6Bq9OupwAAAABJRU5ErkJggg=="
 chrome =
   "data:image/png;base64,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";
 lockscreen =
@@ -933,7 +1019,7 @@ settings =
 ie =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ88xkI08R7SG57pWpD5I97G1DPP4wiLmEX0w&usqp=CAU";
 file =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd8UNlPd879HkSMW4TOUkwbwTUZtntqXtdQQ:https://img.freepik.com/premium-vector/modern-flat-design-txt-file-icon-web-simple-style_599062-541.jpg%3Fw%3D2000&usqp=CAU";
+  "data:image/jpeg;base64,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";
 cmd =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEUTExP///8AAAAMDAx/f38yMjL4+PjHx8fk5OSGhoawsLCIiIiqqqqvr6+EhISmpqZgYGB5eXmenp5tbW3s7Ozm5ubT09MqKiqQkJAYGBjf399VVVW+vr5lZWU+Pj5EREQsLCyfn5+UlJR+1k8FAAACl0lEQVR4nO3c7XKaUBRGYTkgmKig4AexJine/0UWTSGpOiYz7H02hfX86KRJZ17XnETRTJ1MAAAAAAAAAAAAAAAAAAAAAGDIQnvKhVN7qn0uC2JrQeY0C58De88UUkihOQop/GHh9vDF7Ke2lz8u2g+27QeXj2aXL/11mH2ObD0XFs63wnPhWnPm7nREocyMYeGaQpkZChWnKRSauVPo/LTa3Ze6+S/ntF87mVieoUuCWenhIA3PMDn/9fgaKh+kdWF9KZ6/qR6kYWEZN5/bFYo/kYZXbfVV/675bLx814o0vS517j3btAcZ7VVugffC6J+Z+m6mSNqDVLkJxoXnL7lp3hykxvepfeH5IF31cYgDLawP8bQZbmF9fkXSPGzEg/s5rPN+tz+DwWGu8is+w8LQTXw8IPoqXN4Uhl8fC9cvaldun4VLz4XNdWmwqd40n0ZZF8bJSvlZom3hodyrP0E0LDwevTzJtyv09UKNS+0K7/27W52ne1XoVuXplFfZhyrPT2Xaedp3YfqwsAquxS9dp/tVmN8Ubij8drpXheH+dXWt83SvCs/PNv77+9LHhRrTFArNGBY+USgzQ6HiNIVCMxQqTlMoNEOh4rTvwqehFi56ULigsNMMhYrTFArNGBbOKZSZoVBxmkKhGQoVpykUmmkL5xSKT1MoNDOi61LDVzEo7DYzou9SCuWnKRSaoVBxmkKhmRE9Hg7/upRC+WkKhWZGVDj812kolJ+mUGgm68E9je57X2Y9OENPhcM/QwrlpykUmqFQcZpCoZkRFUbq7+Z5LfJcuEt823kuNEQhhRTao5DCx4WL72+AOtXXacJpGllLp6pvpHLnv6F75+HtYAEAAAAAAAAAAAAAAAAAAAAAAIbsD12pRBbO1WULAAAAAElFTkSuQmCC";
 run =
@@ -942,3 +1028,11 @@ windowsicon =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl8LFsejSKHAUqlLdTJ9wzRqn9GhRqMyhmpw&usqp=CAU";
 taskicon =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAAB5CAMAAAAqJH57AAAArlBMVEX///8zMzMmJibm5ua9vb3q6upStSksLCz39/fMzMxsbGy4uLjGxsYhISFTuCnCwsKpqalgYGBZWVkUFBRVvSklHyYzVyc1XScyMDM4SzE0ODMlIyYjFiYkGyZRsSkiEyYtQSYxKTNKnigqNyY/fChImCghCSZMpCkxJTRBgygiDiZFjig7cCcnKyY4ZScsPSYyUScgACaKiopAcC86VTE1QzExSykwHjQoMCYFBQWOsTVWAAAD6UlEQVRoge3aa1PiMBQGYA1QZMW4aiuFtJRyKwIKLi7u/v8/tiflViVJE3Iq42zfD44fGJ7m5M704qJMmTJlytimVmiupO5VpeDUZHLRcKUiaXXhTZY2+n+WCxnXGnKtcfcDP7+05Ic6esh9Q0e+uURP/e62eTa5ens2mdNnkqvNs8lAn0uuNs4mN0v5+8jxxD+PHK9mbVMaRfbfXDcxhHHk+Ik6dGnYaBw5cRx3GHy97Hdcx6H9gHy5HL+A7HQHzIhGkWcUZNryiAmN0s9dh8tPETGhEWS/DcUGPJkSExpBjueuQ4dQcOhoAxpDHlEnWUO5XzxiQCPInS708RT+zNJy69L2Miydjvv4CuO7GxED2l6eQBe7XghzmvaYAW0vx31K+1PWg46eh0Sftpb939DDw5B4iUNHU6JP28stKPOSkYjvV2OiT1vLEy7C0PLgCdy1p0/by7zK0FY22FRdm7aV/fZuZHl8pGXlHNpWjldQ7DWfTQHMLkqYNm0rT2Dp7KYtZWu+onhEl7Zu837VZM98FQ2ILm0p+2u63ynCEaUJI7q0pRzPodiLDRfy3XKQpRnEv/SPgyC/92GH3FaYLaCjXzKje/zM0xEknpjJgod/d7enIJ6A9/mho4PElWYYG8hxp32cFnTzfjyHsFMmz7tye+mJVBIa6Mv+UvIl3UHW2szt3XNQWZtnUV1b5hNX+PT9/RRmBDp6viu3B7UfLR+FWfIP6MrxyqWiZMfUK6zh/e1OyQZ8vEWeMLwuN/fa/fzWEmWdGcwB7FvdP9s5toLSLz5P70z05UufyR5/F+/xMODS4aaATWSYgoov2oTuF1DRWnq6nEu/JrCAptPbE+wfNnIeHeyvGvw/V1VsUzmHZsvdVSPg5wRVsY3lPJovoJHobGQvq+kpPyiM+SiHbl6quvkEWUmHsGvyWRxtT6S4sopOrxorj4QwyPtj+edOlJV0etX4dNfBkxX0lP9mMg4/7FqYspxOrxq9D3daXFlKswWv8zhzj8eW5TSMrVHvcCLFl2V0ulPC3HJ66m62kCW0t9z+RqVcOu1kMc2vGvvf5YqSxXSYHtjUO6S1LKRDvlNmTqTFyCKa9ba/ORcri2g47sIOWbgsoNMjvnqHRJGPabhq0N3Zt1D5mI5mSUu9TyHJglaz3FrjyBrn8KLkk2gc+RQaST6BxpLNaTTZmMaTTWlE2ZDGlM1oVNmIxpVNaGTZgMaW9Wl0WZvWlP9qF5HUbx608ldHrlSqPwtIVUeuNapFJUcukM6TK7Xm18qZd5mLarXknbiLWtH0tfTd8QxdaVyj51b65jjv60Pw3ypWuGXKlCnzzfIPsqDHxSVuFqoAAAAASUVORK5CYII=";
+
+}
+catch{
+    notification("Error","A error has occured with a task. System automatic restart in 5 seconds")
+    setTimeout(function(){
+        boot()
+    },5000)
+}

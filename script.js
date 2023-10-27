@@ -1,9 +1,11 @@
 
 // Product key: tes862440
 
-// Finally figured out how to do multiple windows at once
+// Added the KRNL core 
 
-// Some new custom images 
+// KRNL can get rid of viruses or something 
+
+// Auto resolve mad fine
 
 // Working on the CPU shell
 
@@ -77,7 +79,7 @@ function productcheck(str) {
 // Setup Essentials
 
 document.addEventListener("keydown", function (event) {
-  if (event.ctrlKey && event.key === "u") {
+  if (event.ctrlKey && event.key === "b") {
     alert("System Utilitys opening");
     try {
       closeWindow();
@@ -1151,7 +1153,155 @@ catch(e){
     console.log("[ KRNL ] Error: " + e.message)
     console.log("[ KRNL ] Resolving")
     localStorage.clear()
-    console.log("[ KRNL ] Resolve complete")
-    console.log("[ KRNL ] Attempting to open terminal")
-    cmd1()
+    console.log("[ KRNL ] Resolve complete | If you belive this was because of malicious code, then stop putting random code in the terminal")
+    console.log("[ KRNL ] Please rerun code, error should be resolved")
 }
+
+let bsodErrorCount = 0; // For snapshot-related errors
+let maxBSODErrorCount = 20;
+let errorCount = 0;
+const maxErrorCount = 5;
+const errorHistory = [];
+let snapshot_try = 0;
+let maxSnapshots = 10; // Maximum number of snapshots to keep
+let snapshots = [];
+
+// Initialize the notification system
+function notify(message) {
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.background = 'rgba(0, 0, 0, 0.7)';
+    notification.style.color = '#fff';
+    notification.style.position = 'fixed';
+    notification.style.bottom = '10px';
+    notification.style.right = '10px';
+    notification.style.zIndex = '9999';
+    notification.style.padding = '10px';
+    notification.style.borderRadius = '5px';
+    document.body.appendChild(notification);
+    setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 5000);
+}
+
+function krnl_logEvent(message) {
+    console.log("[KRNL] " + message);
+    notify("[KRNL] " +message);
+}
+
+window.addEventListener("error", function (event) {
+    errorCount++;
+    const error = event.error;
+
+    errorHistory.push(error);
+
+    if (errorCount >= 5){
+        "use strict";
+        krnl_logEvent('Unusual amount of errors detected, using strict')
+    }
+    if (errorCount >= maxErrorCount) {
+        snapshot_try++;
+        krnl_logEvent(`Snapshot attempt #${snapshot_try}`);
+
+        if (snapshot_try > 5) {
+            displayBSOD();
+            return;
+        }
+
+        if (snapshots.length > 0) {
+            const lastSnapshot = snapshots[snapshots.length - 1];
+            document.body.outerHTML = lastSnapshot.html;
+            krnl_logEvent(`Loaded last snapshot taken at ${lastSnapshot.time}`);
+            errorCount = 0;
+        } else {
+            krnl_logEvent("Cannot find a snapshot to load");
+        }
+    }
+
+    if (error instanceof ReferenceError) {
+        krnl_handleReferenceError(event);
+    }
+    if (error instanceof SyntaxError) {
+        krnl_handleSyntaxError(event);
+
+        // Increment the BSOD error count on syntax errors
+        bsodErrorCount++;
+    }
+
+    // Reset the BSOD error count if we're not continuously getting snapshot-related errors
+    if (errorCount < maxErrorCount) {
+        bsodErrorCount = 0;
+    }
+});
+
+function krnl_handleSyntaxError(event) {
+    const error = event.error;
+    krnl_logEvent(`Syntax error: ${error.message}`);
+    krnl_logEvent("Cannot resolve syntax-related errors.");
+}
+
+function krnl_handleReferenceError(event) {
+    const error = event.error;
+    const variableName = error.message.split(" is not defined")[0];
+    krnl_logEvent(`Handling ReferenceError: '${variableName}' is not defined.`);
+
+    const codeToRerun = event.target.outerHTML;
+
+    window[variableName] = undefined;
+    krnl_logEvent(`Defined '${variableName}' as undefined.`);
+
+    const codeLines = codeToRerun.split('\n');
+    for (let i = 0; i < codeLines.length; i++) {
+        try {
+            eval(codeLines[i]);
+        } catch (rerunError) {
+            krnl_logEvent("Error while rerunning the line: " + rerunError);
+        }
+    }
+}
+
+function displayBSOD() {
+    document.body.innerHTML = '<div style="height: 100%; width: 100%; background-color: #0078d4; color: #fff; text-align: center; padding: 20px; font-family: Arial, sans-serif;"> [ KRNL ] Snapshot limit reached <br> [ KRNL ] Failure threshold reached </div>';
+    localStorage.clear()
+}
+
+function takeSnapshot() {
+    const snapshotTime = new Date();
+    const snapshotData = {
+        time: snapshotTime,
+        html: document.body.outerHTML
+    };
+
+    // Remove old snapshots if we exceed the maximum
+    if (snapshots.length >= maxSnapshots) {
+        snapshots.shift(); // Remove the oldest snapshot
+    }
+
+    snapshots.push(snapshotData);
+    krnl_logEvent(`Snapshot taken at ${snapshotTime}`);
+}
+
+function loadSnapshot(snapshotIndex) {
+    if (snapshotIndex >= 0 && snapshotIndex < snapshots.length) {
+        const snapshotData = snapshots[snapshotIndex];
+        document.body.outerHTML = snapshotData.html;
+        krnl_logEvent(`Loaded snapshot taken at ${snapshotData.time}`);
+    } else {
+        krnl_logEvent("Invalid snapshot index");
+    }
+}
+
+function clearSnapshots() {
+    snapshots.length = 0;
+    krnl_logEvent("Snapshots cleared");
+}
+
+function clearErrorHistory() {
+    errorHistory.length = 0;
+    krnl_logEvent("Error history cleared");
+}
+
+krnl_logEvent("Snapshot subsystem initialized");
+setTimeout(function(){
+takeSnapshot()
+},6000)

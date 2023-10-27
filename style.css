@@ -10,6 +10,12 @@ body {
   user-select: none;
 }
 
+.start{
+    background-color: white;
+    width: 150px;
+    height: 200px;
+}
+
 .pushnoti{
     background-color: black;
     opacity: 80%;
@@ -21,24 +27,31 @@ body {
 }
 
 .notifications{
+    z-index: 993992929;
     background-color: black;
     opacity: 80%;
     height: 300px;
     width: 200px;
-    overflow: scroll;
+    overflow: auto;
     position: fixed;
     right: 25px;
     bottom: 50px;
 }
 
 #notbox{
-    overflow: scroll;
+    overflow: auto;
+}
+
+.seperator{
+    height: 40px;
+    background-color: white;
 }
 
 .notification{
     opacity: 100;
     border-radius: 5px;
     color: white;
+    overflow: auto;
 }
 
 #cmdbar{
@@ -124,7 +137,7 @@ h2 {
 }
 
 .window {
-  position: absolute;
+    position: absolute;
   background-color: #c2c2c2;
   width: 400px;
   min-height: 200px;
@@ -132,9 +145,13 @@ h2 {
   border: 2px solid #000;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   resize: both;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  overflow: auto;
   z-index: 1;
+  
+}
+
+.top{
+    z-index: 9919;
 }
 
 textarea{
@@ -147,7 +164,12 @@ textarea{
 }
 
 .window-main{
-    overflow: scroll;
+  overflow: auto;
+  z-index: 1;
+}
+
+.context-menu{
+    background-color: azure;
 }
 
 .spinner {
@@ -173,7 +195,6 @@ textarea{
     overflow: scroll;
 }
 .window-title {
-  background-color: #017acd;
   padding: 8px;
   color: #fff;
   cursor: move;
@@ -182,6 +203,9 @@ textarea{
   text-overflow: ellipsis;
 }
 
+.item1{
+    width: 40px;
+}
 
 .window-content {
   padding: 8px;
@@ -191,6 +215,7 @@ textarea{
 .taskbar {
   position: fixed;
   bottom: 0;
+  z-index: 99;
   left: 0;
   width: 100%;
   height: 40px;
